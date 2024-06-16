@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ru-RU">
+ <head>
+  <title>Chess</title>
+  <meta charset="UTF-8">
+  <style>
+   .box { text-align: center}
+   .centered { display: inline-block;  margin: 0; }
+   .chess-board { border-spacing: 0; border-collapse: collapse; }
+   .chess-board th { padding: .5em; }
+   .chess-board td { border: 0px solid; width: 5em; height: 5em; text-align: center; vertical-align: middle; }
+   .chess-board .white { background: #f0d9b5; }
+   .chess-board .black { background: #b58863; }
+
+   .mblur.white  { background: #CDD26A }
+   .mblur.black { background: #AAA23A}
+   .mblur.wp.white {background: url('piece/wp.png') no-repeat center center, #CDD26A; background-size: contain}
+   .mblur.wp.black { background: url('piece/wp.png') no-repeat center center, #AAA23A; background-size: contain}
+   .mblur.wk.white {background: url('piece/wk.png') no-repeat center center, #CDD26A; background-size: contain}
+   .mblur.wk.black { background: url('piece/wk.png') no-repeat center center, #AAA23A; background-size: contain}
+   .mblur.wn.white {background: url('piece/wn.png') no-repeat center center, #CDD26A; background-size: contain}
+   .mblur.wn.black { background: url('piece/wn.png') no-repeat center center, #AAA23A; background-size: contain}
+   .mblur.wq.white {background: url('piece/wq.png') no-repeat center center, #CDD26A; background-size: contain}
+   .mblur.wq.black { background: url('piece/wq.png') no-repeat center center, #AAA23A; background-size: contain}
+   .mblur.wb.white {background: url('piece/wb.png') no-repeat center center, #CDD26A; background-size: contain}
+   .mblur.wb.black { background: url('piece/wb.png') no-repeat center center, #AAA23A; background-size: contain}
+   .mblur.wr.white {background: url('piece/wr.png') no-repeat center center, #CDD26A; background-size: contain}
+   .mblur.wr.black { background: url('piece/wr.png') no-repeat center center, #AAA23A; background-size: contain}
+   .mblur.bp.white {background: url('piece/bp.png') no-repeat center center, #CDD26A; background-size: contain}
+   .mblur.bp.black { background: url('piece/bp.png') no-repeat center center, #AAA23A; background-size: contain}
+   .mblur.bk.white {background: url('piece/bk.png') no-repeat center center, #CDD26A; background-size: contain}
+   .mblur.bk.black { background: url('piece/bk.png') no-repeat center center, #AAA23A; background-size: contain}
+   .mblur.bn.white {background: url('piece/bn.png') no-repeat center center, #CDD26A; background-size: contain}
+   .mblur.bn.black { background: url('piece/bn.png') no-repeat center center, #AAA23A; background-size: contain}
+   .mblur.bq.white {background: url('piece/bq.png') no-repeat center center, #CDD26A; background-size: contain}
+   .mblur.bq.black { background: url('piece/bq.png') no-repeat center center, #AAA23A; background-size: contain}
+   .mblur.bb.white {background: url('piece/bb.png') no-repeat center center, #CDD26A; background-size: contain}
+   .mblur.bb.black { background: url('piece/bb.png') no-repeat center center, #AAA23A; background-size: contain}
+   .mblur.br.white {background: url('piece/br.png') no-repeat center center, #CDD26A; background-size: contain}
+   .mblur.br.black { background: url('piece/br.png') no-repeat center center, #AAA23A; background-size: contain}
+
+   .blur.white {background: #AEB287}
+   .blur.black {background: #84794E}
+   .blur.wp.white {background: url('piece/wp.png') no-repeat center center, #AEB287; background-size: contain}
+   .blur.wp.black { background: url('piece/wp.png') no-repeat center center, #84794E; background-size: contain}
+   .blur.wk.white {background: url('piece/wk.png') no-repeat center center, #AEB287; background-size: contain}
+   .blur.wk.black { background: url('piece/wk.png') no-repeat center center, #84794E; background-size: contain}
+   .blur.wn.white {background: url('piece/wn.png') no-repeat center center, #AEB287; background-size: contain}
+   .blur.wn.black { background: url('piece/wn.png') no-repeat center center, #84794E; background-size: contain}
+   .blur.wq.white {background: url('piece/wq.png') no-repeat center center, #AEB287; background-size: contain}
+   .blur.wq.black { background: url('piece/wq.png') no-repeat center center, #84794E; background-size: contain}
+   .blur.wb.white {background: url('piece/wb.png') no-repeat center center, #AEB287; background-size: contain}
+   .blur.wb.black { background: url('piece/wb.png') no-repeat center center, #84794E; background-size: contain}
+   .blur.wr.white {background: url('piece/wr.png') no-repeat center center, #AEB287; background-size: contain}
+   .blur.wr.black { background: url('piece/wr.png') no-repeat center center, #84794E; background-size: contain}
+   .blur.bp.white {background: url('piece/bp.png') no-repeat center center, #AEB287; background-size: contain}
+   .blur.bp.black { background: url('piece/bp.png') no-repeat center center, #84794E; background-size: contain}
+   .blur.bk.white {background: url('piece/bk.png') no-repeat center center, #AEB287; background-size: contain}
+   .blur.bk.black { background: url('piece/bk.png') no-repeat center center, #84794E; background-size: contain}
+   .blur.bn.white {background: url('piece/bn.png') no-repeat center center, #AEB287; background-size: contain}
+   .blur.bn.black { background: url('piece/bn.png') no-repeat center center, #84794E; background-size: contain}
+   .blur.bq.white {background: url('piece/bq.png') no-repeat center center, #AEB287; background-size: contain}
+   .blur.bq.black { background: url('piece/bq.png') no-repeat center center, #84794E; background-size: contain}
+   .blur.bb.white {background: url('piece/bb.png') no-repeat center center, #AEB287; background-size: contain}
+   .blur.bb.black { background: url('piece/bb.png') no-repeat center center, #84794E; background-size: contain}
+   .blur.br.white {background: url('piece/br.png') no-repeat center center, #AEB287; background-size: contain}
+   .blur.br.black { background: url('piece/br.png') no-repeat center center, #84794E; background-size: contain}
+
+   .pblur.white {background: url('piece/pblur.png'), #f0d9b5; background-size: contain}
+   .pblur.black {background: url('piece/pblur.png'), #b58863; background-size: contain}
+   .pblur.wp.white {background: url('piece/pblur.png'), url('piece/wp.png'), #f0d9b5; background-size: contain}
+   .pblur.wp.black { background: url('piece/pblur.png'), url('piece/wp.png'), #b58863; background-size: contain}
+   .pblur.wk.white {background: url('piece/pblur.png'), url('piece/wk.png'), #f0d9b5; background-size: contain}
+   .pblur.wk.black { background: url('piece/pblur.png'), url('piece/wk.png'), #b58863; background-size: contain}
+   .pblur.wn.white {background: url('piece/pblur.png'), url('piece/wn.png'), #f0d9b5; background-size: contain}
+   .pblur.wn.black { background: url('piece/pblur.png'), url('piece/wn.png'), #b58863; background-size: contain}
+   .pblur.wq.white {background: url('piece/pblur.png'), url('piece/wq.png'), #f0d9b5; background-size: contain}
+   .pblur.wq.black { background: url('piece/pblur.png'), url('piece/wq.png'), #b58863; background-size: contain}
+   .pblur.wb.white {background: url('piece/pblur.png'), url('piece/wb.png'), #f0d9b5; background-size: contain}
+   .pblur.wb.black { background: url('piece/pblur.png'), url('piece/wb.png'), #b58863; background-size: contain}
+   .pblur.wr.white {background: url('piece/pblur.png'), url('piece/wr.png'), #f0d9b5; background-size: contain}
+   .pblur.wr.black { background: url('piece/pblur.png'), url('piece/wr.png'), #b58863; background-size: contain}
+   .pblur.bp.white {background: url('piece/pblur.png'), url('piece/bp.png'), #f0d9b5; background-size: contain}
+   .pblur.bp.black { background: url('piece/pblur.png'), url('piece/bp.png'), #b58863; background-size: contain}
+   .pblur.bk.white {background: url('piece/pblur.png'), url('piece/bk.png'), #f0d9b5; background-size: contain}
+   .pblur.bk.black { background: url('piece/pblur.png'), url('piece/bk.png'), #b58863; background-size: contain}
+   .pblur.bn.white {background: url('piece/pblur.png'), url('piece/bn.png'), #f0d9b5; background-size: contain}
+   .pblur.bn.black { background: url('piece/pblur.png'), url('piece/bn.png'), #b58863; background-size: contain}
+   .pblur.bq.white {background: url('piece/pblur.png'), url('piece/bq.png'), #f0d9b5; background-size: contain}
+   .pblur.bq.black { background: url('piece/pblur.png'), url('piece/bq.png'), #b58863; background-size: contain}
+   .pblur.bb.white {background: url('piece/pblur.png'), url('piece/bb.png'), #f0d9b5; background-size: contain}
+   .pblur.bb.black { background: url('piece/pblur.png'), url('piece/bb.png'), #b58863; background-size: contain}
+   .pblur.br.white {background: url('piece/pblur.png'), url('piece/br.png'), #f0d9b5; background-size: contain}
+   .pblur.br.black { background: url('piece/pblur.png'), url('piece/br.png'), #b58863; background-size: contain}
+
+   .wp.white {background: url('piece/wp.png') no-repeat center center, #f0d9b5; background-size: contain}
+   .wp.black { background: url('piece/wp.png') no-repeat center center, #b58863; background-size: contain}
+   .wk.white {background: url('piece/wk.png') no-repeat center center, #f0d9b5; background-size: contain}
+   .wk.black { background: url('piece/wk.png') no-repeat center center, #b58863; background-size: contain}
+   .wn.white {background: url('piece/wn.png') no-repeat center center, #f0d9b5; background-size: contain}
+   .wn.black { background: url('piece/wn.png') no-repeat center center, #b58863; background-size: contain}
+   .wq.white {background: url('piece/wq.png') no-repeat center center, #f0d9b5; background-size: contain}
+   .wq.black { background: url('piece/wq.png') no-repeat center center, #b58863; background-size: contain}
+   .wb.white {background: url('piece/wb.png') no-repeat center center, #f0d9b5; background-size: contain}
+   .wb.black { background: url('piece/wb.png') no-repeat center center, #b58863; background-size: contain}
+   .wr.white {background: url('piece/wr.png') no-repeat center center, #f0d9b5; background-size: contain}
+   .wr.black { background: url('piece/wr.png') no-repeat center center, #b58863; background-size: contain}
+   .bp.white {background: url('piece/bp.png') no-repeat center center, #f0d9b5; background-size: contain}
+   .bp.black { background: url('piece/bp.png') no-repeat center center, #b58863; background-size: contain}
+   .bk.white {background: url('piece/bk.png') no-repeat center center, #f0d9b5; background-size: contain}
+   .bk.black { background: url('piece/bk.png') no-repeat center center, #b58863; background-size: contain}
+   .bn.white {background: url('piece/bn.png') no-repeat center center, #f0d9b5; background-size: contain}
+   .bn.black { background: url('piece/bn.png') no-repeat center center, #b58863; background-size: contain}
+   .bq.white {background: url('piece/bq.png') no-repeat center center, #f0d9b5; background-size: contain}
+   .bq.black { background: url('piece/bq.png') no-repeat center center, #b58863; background-size: contain}
+   .bb.white {background: url('piece/bb.png') no-repeat center center, #f0d9b5; background-size: contain}
+   .bb.black { background: url('piece/bb.png') no-repeat center center, #b58863; background-size: contain}
+   .br.white {background: url('piece/br.png') no-repeat center center, #f0d9b5; background-size: contain}
+   .br.black { background: url('piece/br.png') no-repeat center center, #b58863; background-size: contain}
+  </style>
+ </head>
+ <body>
+ <div class="box">
+  <div class="centered">
+  <table class="chess-board">
+   <tbody>
+    <tr>
+     <th></th>
+     <th>a</th>
+     <th>b</th>
+     <th>c</th>
+     <th>d</th>
+     <th>e</th>
+     <th>f</th>
+     <th>g</th>
+     <th>h</th>
+    </tr>
+    <tr>
+     <th>8</th>
+     <td class="white" id="a8"></td>
+     <td class="black" id="b8"></td>
+     <td class="white" id="c8"></td>
+     <td class="black" id="d8"></td>
+     <td class="white" id="e8"></td>
+     <td class="black" id="f8"></td>
+     <td class="white" id="g8"></td>
+     <td class="black" id="h8"></td>
+    </tr>
+    <tr>
+     <th>7</th>
+     <td class="black" id="a7"></td>
+     <td class="white" id="b7"></td>
+     <td class="black" id="c7"></td>
+     <td class="white" id="d7"></td>
+     <td class="black" id="e7"></td>
+     <td class="white" id="f7"></td>
+     <td class="black" id="g7"></td>
+     <td class="white" id="h7"></td>
+    </tr>
+    <tr>
+     <th>6</th>
+     <td class="white" id="a6"></td>
+     <td class="black" id="b6"></td>
+     <td class="white" id="c6"></td>
+     <td class="black" id="d6"></td>
+     <td class="white" id="e6"></td>
+     <td class="black" id="f6"></td>
+     <td class="white" id="g6"></td>
+     <td class="black" id="h6"></td>
+    </tr>
+    <tr>
+     <th>5</th>
+     <td class="black" id="a5"></td>
+     <td class="white" id="b5"></td>
+     <td class="black" id="c5"></td>
+     <td class="white" id="d5"></td>
+     <td class="black" id="e5"></td>
+     <td class="white" id="f5"></td>
+     <td class="black" id="g5"></td>
+     <td class="white" id="h5"></td>
+    </tr>
+    <tr>
+     <th>4</th>
+     <td class="white" id="a4"></td>
+     <td class="black" id="b4"></td>
+     <td class="white" id="c4"></td>
+     <td class="black" id="d4"></td>
+     <td class="white" id="e4"></td>
+     <td class="black" id="f4"></td>
+     <td class="white" id="g4"></td>
+     <td class="black" id="h4"></td>
+    </tr>
+    <tr>
+     <th>3</th>
+     <td class="black" id="a3"></td>
+     <td class="white" id="b3"></td>
+     <td class="black" id="c3"></td>
+     <td class="white" id="d3"></td>
+     <td class="black" id="e3"></td>
+     <td class="white" id="f3"></td>
+     <td class="black" id="g3"></td>
+     <td class="white" id="h3"></td>
+    </tr>
+    <tr>
+     <th>2</th>
+     <td class="white wp" id="a2"></td>
+     <td class="black wp" id="b2"></td>
+     <td class="white wp" id="c2"></td>
+     <td class="black wp" id="d2"></td>
+     <td class="white wp" id="e2"></td>
+     <td class="black wp" id="f2"></td>
+     <td class="white wp" id="g2"></td>
+     <td class="black wp" id="h2"></td>
+    </tr>
+    <tr>
+     <th>1</th>
+     <td class="black" id="a1"></td>
+     <td class="white" id="b1"></td>
+     <td class="black" id="c1"></td>
+     <td class="white" id="d1"></td>
+     <td class="black" id="e1"></td>
+     <td class="white" id="f1"></td>
+     <td class="black" id="g1"></td>
+     <td class="white" id="h1"></td>
+    </tr>
+   </tbody>
+  </table>
+
+  </div>
+ </div>
+<script type="module" src="main.js"></script>
+ </body>
+</html>
